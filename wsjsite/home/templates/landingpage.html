@@ -1,0 +1,75 @@
+{% load static %}
+<html>
+    <head>
+        <title>WSJ Cleopatra - Landingpage</title>
+        <style>
+            a[class="nav-link active"] {
+                color: #000000;
+            }
+            a[class="nav-link active"]:hover{
+                color: #517964;
+            }
+            .container-fluid {
+                justify-content: space-around;
+                background-color: #ffffff;
+                border-bottom: 0.2vw solid rgb(219, 219, 219);
+                border-bottom-style: groove;
+            }
+            .logo {
+                font-weight: bold;
+                font-size: larger;
+            }
+            .img-fluid{
+                width: 100vw;
+            }
+            .row>div{
+                border-right: 1px solid rgb(86, 84, 84);
+            }
+            .row>div:nth-child(1){
+                border: none;
+            }
+        </style>
+    </head>
+    <body>  
+        <div class="container-fluid sticky-top">
+            <div class="row"> 
+                <div class="col-3 logo">
+                    <a class="nav-link active" href="#">CLEOPATRA</a>
+                </div>
+                <div class="col-7">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">Usługi</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">Produkty</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">Nasz zespół</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#">Kontakt</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <ul class="nav justify-content-start">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Rejestracja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Logowanie</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div> 
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{% static 'images/background.png' %}" class="img-fluid" alt="Background image"/>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
