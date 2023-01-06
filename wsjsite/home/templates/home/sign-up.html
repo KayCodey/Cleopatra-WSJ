@@ -1,6 +1,6 @@
 {%block content%}
 <section id="sign-up">
-<h2>Sign up</h2>
+<h2>Zarejestruj się</h2>
 
     <form action = "" method ="POST" >
         {% csrf_token %}
@@ -12,10 +12,12 @@
         </div>
         {%endfor%}
 		{{signup_form.errors}}
-        <input type="submit" value="Sign up"> 
+        <input type="submit" value="Zarejestruj się"> 
     </form>
 </div>
 {%for message in messages%}
 <p> {{message}}</p>
 {%endfor%}
 {%endblock%}
+
+

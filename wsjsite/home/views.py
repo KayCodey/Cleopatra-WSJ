@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 import datetime
-from .forms import SignupForm, CreateUserForm
-from django.contrib.auth import login, authenticate 
+from .forms import CreateUserForm
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib import messages
 # Create your views here.
@@ -15,8 +15,11 @@ def index(request):
     today = datetime.datetime.now().date()
     return render(request, "home/index.html", {"today": today})
 
-# Sign Up View
+# Sign Up 
 def signup(request): 
+    #if request.user.is_authenticated:
+    #    return HttpResponseRedirect("/")
+    #else:
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST) 
@@ -24,16 +27,31 @@ def signup(request):
             form.save()
             user = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for '+ user)
-        #name = form.cleaned_data.get('first_name') 
-        #last_name  = form.cleaned_data.get('last_name')
-        #phone = form.cleaned_data.get('phone_number')
-        #email_address = form.cleaned_data.get('email')
-        #password = form.cleaned_data.get('password') 
-        #user = authenticate(name=name, last_name=last_name,phone = phone, email_address = email_address,password=password)
-        #user = form.save()
-        #login(request, user) 
-        #return redirect('home/index.html') 
+            #return redirect('home/index.html') 
     context = { 
-        'signup_form': form 
+            'signup_form': form 
     } 
     return render(request, 'home/sign-up.html', context) 
+
+
+#Sign In
+def signin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request,username=username,password=password)
+
+        if user is not None:
+            login(request,user)
+            return HttpResponseRedirect("/")
+        else:
+            messages.info(request, 'Username or password is incorrect')
+
+
+    context ={}
+    return render(request, 'home/sign-in.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return HttpResponseRedirect("/")
