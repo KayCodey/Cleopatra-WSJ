@@ -1,5 +1,21 @@
-<form method="post" action="."> 
-	{% csrf_token %} 
-	{{form}} 
-	<input type="submit" value="Sign up"> 
-  </form> 
+{%block content%}
+<section id="sign-up">
+<h2>Sign up</h2>
+
+    <form action = "" method ="POST" >
+        {% csrf_token %}
+        {% for form_field in signup_form%}
+        <div class = "form-control">
+            {{form_field.label_tag}}
+			{{form_field}}
+
+        </div>
+        {%endfor%}
+		{{signup_form.errors}}
+        <input type="submit" value="Sign up"> 
+    </form>
+</div>
+{%for message in messages%}
+<p> {{message}}</p>
+{%endfor%}
+{%endblock%}
