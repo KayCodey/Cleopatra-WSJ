@@ -15,8 +15,26 @@
         </title>
     </head>
     <body>
+ 
+        {%block content%}
+
+        <h1> Opinie </h1>
+        
+        {%for comment in comment_list%}
+        <strong>Username: {{comment.username}}</strong>
+        <ul>
+        <li>Usługa: {{comment.service_name}}</li>
+        Fryzjer: {{comment.worker_name}}<br>
+        Ocena: {{comment.rating}}<br>
+        Komentarz: {{comment.text}}
+        </ul>
+        {%endfor%}
+        
+        
+        {% endblock%}
         <p>Hello world, again !</p>
         <p>Today is {{today}}</p>
+
     </body>
 
 </html>

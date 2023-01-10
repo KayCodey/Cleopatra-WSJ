@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 import datetime
 from .forms import CreateUserForm
-from .models import Service,Products, Employee
+from .models import Service,Products, Employee, Comment
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib import messages
@@ -34,6 +34,12 @@ def employees(request):
     employee_list = Employee.objects.all()
     context = {'employee_list': employee_list}
     return render(request, 'home/employee.html', context)
+
+#Comments View
+def review(request):
+    comment_list = Comment.objects.all()
+    context = {'comment_list': comment_list}
+    return render(request, 'home/index.html', context)
 
 # Sign Up 
 def signup(request): 
