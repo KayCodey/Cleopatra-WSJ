@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from .models import Comment
 
 
  
@@ -21,4 +21,23 @@ class CreateUserForm(UserCreationForm):
             "username": "Login",
             "email": "Adres e-mail"
         }
+
+
+"""class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude= ['user_email']
+        labels ={
+            "username": "Twoje imię",
+            "service_name": "Usługa",
+            "worker_name": "Fryzjer",
+            "rating": "Ocena",
+            "text": "Komentarz"
+        }
+        error_messages = {
+            "username": {
+                "required": "Your name must not be empty!",
+                "max_length": "Please enter a shorter name!"
+            }
+        }"""
 

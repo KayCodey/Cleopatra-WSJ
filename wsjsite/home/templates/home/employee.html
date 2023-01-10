@@ -1,0 +1,17 @@
+
+
+{%block content%}
+
+<h1> Nasz Zespół </h1>
+
+{%for employee in employee_list%}
+<strong>{{employee.service_name}}</strong>
+<ul>
+<li>{{employee.first_name}} {{employee.last_name}}</li>
+Numer kontaktowy: {{employee.phone_number}}
+<li><img src="{{employee.image.url}}" alt="{{employee.last_name}}"/></li>
+</ul>
+{%endfor%}
+
+
+{% endblock%}

@@ -1,0 +1,16 @@
+
+{%block content%}
+
+<h1> Produkty </h1>
+
+{%for product in product_list%}
+<strong>{{product.product_name}}</strong>
+<ul>
+<li>Rodzaj produktu: {{product.product_type}}</li>
+<li>Producent: {{product.manufacturer}}</li>
+<img src="{{product.image.url}}" alt="{{product.product_name}}"/>
+</ul>
+{%endfor%}
+
+
+{% endblock%}

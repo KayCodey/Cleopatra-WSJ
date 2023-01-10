@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.core.validators import MinLengthValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -52,18 +53,22 @@ class Products(models.Model):
     product_type = models.CharField(max_length=100, verbose_name= "Typ")
     manufacturer = models.CharField(max_length=100, verbose_name= "Producent")
     amount = models.IntegerField("Ilość")
+    image = models.ImageField(upload_to="photos", null=True,verbose_name= "Zdjęcie")
     class Meta:
         verbose_name_plural = "Produkty"
 
 
 class Comment(models.Model):
-    user_name = models.CharField(max_length=120,verbose_name= "Username")
+    username = models.CharField(max_length=100,verbose_name= "Username")
     user_email = models.EmailField("E-mail klienta")
     service_name = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True,verbose_name= "Usługa")
     worker_name = models.ForeignKey(Employee,on_delete=models.SET_NULL, null=True, verbose_name= "Fryzjer")
     text = models.TextField(max_length=400,verbose_name= "Treść")
+    rating = models.IntegerField(validators =[MaxValueValidator(5),MinValueValidator(1)],default=5,verbose_name="Ocena")
     class Meta:
         verbose_name_plural = "Komentarze"
+    def __str__(self):
+        return f"Kommentarz"
 
 
 class Unavailability(models.Model):

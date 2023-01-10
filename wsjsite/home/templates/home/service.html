@@ -1,0 +1,18 @@
+
+
+{%block content%}
+
+<h1> Usługi </h1>
+
+{%for service in service_list%}
+<strong>{{service.service_name}}</strong>
+<ul>
+<li>Cena: {{service.price}} zł</li>
+<li>Przewidywany czas: {{service.approx_time}}</li>
+
+</ul>
+{%endfor%}
+
+
+{% endblock%}
+

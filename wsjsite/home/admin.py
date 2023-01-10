@@ -15,9 +15,8 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_display = ("first_name","last_name",)
     list_filter = ("first_name","last_name",)
 
-
 class CommentAdmin(admin.ModelAdmin):
-     list_display = ("user_name",)
+     list_display = ("username",)
 
 
 class ProductAdmin(admin.ModelAdmin):

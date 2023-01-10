@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 import datetime
 from .forms import CreateUserForm
+from .models import Service,Products, Employee
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm 
 from django.contrib import messages
+
 # Create your views here.
 
 TEMPLATE_DIRS = (
@@ -14,6 +16,24 @@ TEMPLATE_DIRS = (
 def index(request):
     today = datetime.datetime.now().date()
     return render(request, "home/index.html", {"today": today})
+
+#Service View
+def services(request):
+    service_list = Service.objects.all()
+    context = {'service_list': service_list}
+    return render(request, 'home/service.html', context)
+
+#Products View
+def products(request):
+    product_list = Products.objects.all()
+    context = {'product_list': product_list}
+    return render(request, 'home/products.html', context)
+
+#Employee View
+def employees(request):
+    employee_list = Employee.objects.all()
+    context = {'employee_list': employee_list}
+    return render(request, 'home/employee.html', context)
 
 # Sign Up 
 def signup(request): 
