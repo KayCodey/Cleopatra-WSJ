@@ -22,6 +22,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("product_name","amount",)
+    list_filter = ("manufacturer", "product_type",)
 
 class UnavailAdmin(admin.ModelAdmin):
     list_display =("worker",)

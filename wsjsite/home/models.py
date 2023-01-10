@@ -8,22 +8,27 @@ from django.dispatch import receiver
 
 
 class Service(models.Model):
-    service_name = models.CharField(max_length= 100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    approx_time = models.DurationField()
+    
+    service_name = models.CharField(max_length= 100, verbose_name= "Usługa")
+    price = models.DecimalField(max_digits=10, decimal_places=2,verbose_name= "Cena")
+    approx_time = models.DurationField("Przewidywany czas")
+    class Meta:
+        verbose_name_plural = "Usługi"
 
     def __str__(self):
         return f"{self.service_name}"
 
 
 class Employee(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(validators=[MinLengthValidator(9)], unique=True, max_length=20)
-    email = models.EmailField(unique=True)
-    login = models.CharField(validators = [MinLengthValidator(5)], max_length=20, unique=True)
-    password = models.CharField(validators=[MinLengthValidator(8)], max_length=20)
-    image = models.ImageField(upload_to="photos", null=True)
+    first_name = models.CharField(max_length=100,verbose_name= "Imię")
+    last_name = models.CharField(max_length=100, verbose_name= "Nazwisko")
+    phone_number = models.CharField(validators=[MinLengthValidator(9)], unique=True, max_length=20,verbose_name= "Numer telefonu")
+    email = models.EmailField(unique=True,verbose_name= "E-mail")
+    login = models.CharField(validators = [MinLengthValidator(5)], max_length=20, unique=True, verbose_name= "Login")
+    password = models.CharField(validators=[MinLengthValidator(8)], max_length=20, verbose_name= "Hasło")
+    image = models.ImageField(upload_to="photos", null=True,verbose_name= "Zdjęcie")
+    class Meta:
+        verbose_name_plural = "Fryzjerzy"
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -43,29 +48,31 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     instance.profile.save()'''
 
 class Products(models.Model):
-    product_name = models.CharField(max_length=100)
-    product_type = models.CharField(max_length=100)
-    manufacturer = models.CharField(max_length=100)
-    amount = models.IntegerField()
+    product_name = models.CharField(max_length=100, verbose_name= "Nazwa produktu")
+    product_type = models.CharField(max_length=100, verbose_name= "Typ")
+    manufacturer = models.CharField(max_length=100, verbose_name= "Producent")
+    amount = models.IntegerField("Ilość")
     class Meta:
-        verbose_name_plural = "Products"
+        verbose_name_plural = "Produkty"
 
 
 class Comment(models.Model):
-    user_name = models.CharField(max_length=120)
-    user_email = models.EmailField()
-    service_name = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True)
-    worker_name = models.ForeignKey(Employee,on_delete=models.SET_NULL, null=True)
-    text = models.TextField(max_length=400)
+    user_name = models.CharField(max_length=120,verbose_name= "Username")
+    user_email = models.EmailField("E-mail klienta")
+    service_name = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True,verbose_name= "Usługa")
+    worker_name = models.ForeignKey(Employee,on_delete=models.SET_NULL, null=True, verbose_name= "Fryzjer")
+    text = models.TextField(max_length=400,verbose_name= "Treść")
+    class Meta:
+        verbose_name_plural = "Komentarze"
 
 
 class Unavailability(models.Model):
-    worker = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
-    start_date = models.DateTimeField('Start Date')
-    end_date = models.DateTimeField('End Date')
+    worker = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, verbose_name= "Fryzjer")
+    start_date = models.DateTimeField('Początek')
+    end_date = models.DateTimeField('Koniec')
     class Meta:
-        verbose_name = 'Unavailability'
-        verbose_name_plural = 'Unavailability'
+        verbose_name = 'Niedostępność'
+        verbose_name_plural = 'Niedostępność'
 
     def __str__(self):
         return f"{self.worker}"
@@ -74,13 +81,15 @@ class Unavailability(models.Model):
 
 class Appointment(models.Model):
     class AppointmanetStatus(models.TextChoices):
-        COMPLETED = 'Completed'
-        SCHEDULED =  'Scheduled'
-        CANCELLED = 'Cancelled'
-    client = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
-    employee = models.ForeignKey(Employee,on_delete=models.SET_NULL, null=True)
-    status= models.CharField(max_length=100, choices=AppointmanetStatus.choices, default=AppointmanetStatus.SCHEDULED)
-    service = models.ManyToManyField(Service)
-    date = models.DateTimeField()
+        ZREALIZOWANA = 'Zrealizowana'
+        ZAPLANOWANA =  'Zaplanowana'
+        ODWOŁANA= 'Odwołana'
+    client = models.ForeignKey(User,on_delete=models.SET_NULL, null=True,verbose_name= "Klient")
+    employee = models.ForeignKey(Employee,on_delete=models.SET_NULL, null=True,verbose_name= "Fryzjer")
+    status= models.CharField(max_length=100, choices=AppointmanetStatus.choices, default=AppointmanetStatus.ZAPLANOWANA)
+    service = models.ManyToManyField(Service, verbose_name= "Usługa")
+    date = models.DateTimeField("Data")
+    class Meta:
+        verbose_name_plural = "Wizyta"
     def __str__(self):
-        return f"Appointment"
+        return f"Wizyta"
